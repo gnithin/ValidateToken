@@ -1,0 +1,4 @@
+Source Code in node.js with Express for validating a token from googleApis.
+
+This is specifically for tokens with the scope-https://www.googleapis.com/auth/userinfo.profile ,which is used to obtain user data.
+After the token has been received, a request is made to this URL-https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=<token-here> , which returns the validity of the token and the user details in JSON.
