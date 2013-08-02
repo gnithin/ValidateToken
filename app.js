@@ -1,11 +1,3 @@
-var https=require("https");
-var fs=require("fs");
-
-var privateKey  = fs.readFileSync('sslcert/server.key').toString();
-var certificate = fs.readFileSync('sslcert/server.crt').toString();
-
-var credentials = {key: privateKey, cert: certificate};
-
 var express=require("express");
 var app=express();
 var request=require("./request");
@@ -71,6 +63,6 @@ app.get("*",function(req,res){
 		layout: false
 	});
 });
-https.createServer(credentials, app).listen(443);
+app.listen(9000);
 write("Server Started");
 write("listening to port 9000");
