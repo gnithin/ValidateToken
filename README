@@ -1,8 +1,11 @@
 Source Code in node.js with Express.js for validating a token from googleApis.
 
-This is for all the scopes mentioned in this link - http://discovery-check.appspot.com/oauth2/v2
+This is for all the scopes mentioned in this link -
+http://discovery-check.appspot.com/oauth2/v2
 The data related to a token and its validity can be obtained by passing the token as a parameter.
-This basically uses this googleApi endpoint - https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=<token-here>
+This basically uses this googleApi endpoint -
+https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=<token-here>
 Along with this, if details regarding the token are required, then additional to above, the parameter, 'tokenInfo=true' is passed.
-The googleApi endpoint used here is - https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=<token-here>
+The googleApi endpoint used here is -
+https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=<token-here>
 
