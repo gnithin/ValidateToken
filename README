@@ -1,4 +1,4 @@
-Source Code in node.js with Express for validating a token from googleApis.
+Source Code in node.js with Express.js for validating a token from googleApis.
 
 This is for all the scopes mentioned in this link - http://discovery-check.appspot.com/oauth2/v2
 The data related to a token and its validity can be obtained by passing the token as a parameter.
