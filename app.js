@@ -1,3 +1,11 @@
+var https=require("https");
+var fs=require("fs");
+
+var privateKey  = fs.readFileSync('sslcert/server.key').toString();
+var certificate = fs.readFileSync('sslcert/server.crt').toString();
+
+var credentials = {key: privateKey, cert: certificate};
+
 var express=require("express");
 var app=express();
 var request=require("./request");
@@ -11,38 +19,44 @@ app.configure(function(){
 		next();
 	});
 });
+
+var USER_INFO_PATH='/oauth2/v1/userinfo?alt=json&access_token=';
+var TOKEN_INFO_PATH='/oauth2/v1/tokeninfo?access_token=';
+var HOST_PATH='www.googleapis.com';
+
 app.get("/",function(req,res){
 	var tokenId=req.query.tokenId;
+	var tokenInfo=req.query.tokenInfo;
 	if(tokenId != undefined){
 		write("TokenId :"+tokenId);
+		var requiredPath= (tokenInfo != undefined && tokenInfo === 'true')? TOKEN_INFO_PATH : USER_INFO_PATH;
 		var options={
-			host: 'www.googleapis.com',
+			host: HOST_PATH,
 			port: 443,			//Its HTTPS
-			path: '/oauth2/v1/userinfo?alt=json&access_token='+tokenId,
+			path: requiredPath+tokenId,
 			method: 'GET'
 		};
 		request.getHTTPResponse(options,function(err,data){
+			var displayContent;
 			if(err===true){
-				write("Error in obtaining Data");
+				displayContent="Error in obtaining Data";				
 			}
 			else{
 				var obj={};
 				obj=JSON.parse(data);
-				var displayContent;
 				if("error" in obj){
 					displayContent="Token Invalid";
-					write(displayContent);
 				}
 				else{
 					write("Token Valid");
 					displayContent=JSON.stringify(obj);
-					write(displayContent);
 				}
-				res.render('home.ejs',{
-					layout:	false,
-					locals: {"displayContent": displayContent}
-				});
 			}
+			write(displayContent);
+			res.render('home.ejs',{
+				layout:	false,
+				locals: {"displayContent": displayContent}
+			});
 		});
 	}
 	else{
@@ -57,6 +71,6 @@ app.get("*",function(req,res){
 		layout: false
 	});
 });
-app.listen(9000);
+https.createServer(credentials, app).listen(443);
 write("Server Started");
 write("listening to port 9000");
