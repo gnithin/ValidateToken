@@ -17,10 +17,17 @@ var TOKEN_INFO_PATH='/oauth2/v1/tokeninfo?access_token=';
 var HOST_PATH='www.googleapis.com';
 
 app.get("/",function(req,res){
+	/**
+		Obtain the tokens from the get Parameter.
+	*/
 	var tokenId=req.query.tokenId;
 	var tokenInfo=req.query.tokenInfo;
 	if(tokenId != undefined){
 		write("TokenId :"+tokenId);
+		/**
+			Make an HTTPRequest to the specific URL (depending on tokenInfo parameter.), with the token.
+			Define the CallBack function for HTTPRequest.
+		*/
 		var requiredPath= (tokenInfo != undefined && tokenInfo === 'true')? TOKEN_INFO_PATH : USER_INFO_PATH;
 		var options={
 			host: HOST_PATH,
@@ -28,6 +35,7 @@ app.get("/",function(req,res){
 			path: requiredPath+tokenId,
 			method: 'GET'
 		};
+		res.set('Content-Type', 'text/plain');
 		request.getHTTPResponse(options,function(err,data){
 			var displayContent;
 			if(err===true){
@@ -45,23 +53,15 @@ app.get("/",function(req,res){
 				}
 			}
 			write(displayContent);
-			res.render('home.ejs',{
-				layout:	false,
-				locals: {"displayContent": displayContent}
-			});
+			res.end(displayContent);
 		});
 	}
 	else{
-		res.render('home.ejs',{
-			layout:	false,
-			locals: {"displayContent": "Token Undefined"}
-		});
+		res.end("Token Undefined");
 	}
 });
 app.get("*",function(req,res){
-	res.render('invalid.ejs',{
-		layout: false
-	});
+	res.end("Invalid Page");
 });
 app.listen(9000);
 write("Server Started");

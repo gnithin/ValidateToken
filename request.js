@@ -8,7 +8,7 @@ exports.getHTTPResponse=function (options,callback){
 		});
 	});
 	req.on('error',function(e){
-		write("problem with http request "+ e.message);
+		console.log("problem with http request "+ e.message);
 		callback(true,null);
 	});
 	req.end();
