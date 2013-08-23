@@ -4,8 +4,10 @@ This is for all the scopes mentioned in this link -
 http://discovery-check.appspot.com/oauth2/v2
 The data related to a token and its validity can be obtained by passing the token as a parameter.
 This basically uses this googleApi endpoint -
-https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=<token-here>
+https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=6ZTdchMu18
 Along with this, if details regarding the token are required, then additional to above, the parameter, 'tokenInfo=true' is passed.
 The googleApi endpoint used here is -
-https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=<token-here>
+https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=6ZTdchMu18
 
+To see how it really works, we can generate tokens using this link-
+https://developers.google.com/oauthplayground/
